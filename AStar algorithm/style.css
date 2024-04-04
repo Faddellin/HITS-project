@@ -1,0 +1,238 @@
+body
+{
+  background: linear-gradient(to left, rgb(134, 0, 164), rgb(124, 235, 124));
+  font-family: "Open Sans", Arial, sans-serif;
+  text-shadow: 1px, 1px;
+}
+
+/* Надписи label */
+label
+{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 500;
+}
+
+/* Всплывающее окно */
+.popup
+{
+  color: white;
+  text-align: center;
+  max-width: 200px;
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.popup.fadeOut
+{
+  animation-name: fadeOut;
+}
+
+.closePopup
+{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.closePopup:hover
+{
+  color: #bbb;
+}
+
+@keyframes fadeIn
+{
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut
+{
+  0%
+  {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100%
+  {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Изображение и вращение */
+.image
+{
+  max-width: 100px;
+  width: 100px;
+  height: 100px;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate
+{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Слайдер */
+.slider
+{
+  border: 0;
+  border-radius: 5px;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+
+/* Значение слайдера */
+#labyrinthSizeValue, #algorithmSpeedValue
+{
+  color: white;
+  -webkit-text-stroke: 0.65px rgb(0, 0, 0);
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
+}
+
+/* Кнопки */
+.customisedButton
+{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #4676D7;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 14px;
+  min-width: 50px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.customisedButton:disabled
+{
+  background: gray;
+}
+
+.customisedButton:hover:enabled
+{
+  background: #1D49AA;
+}
+
+.customisedButton:active:enabled
+{
+  outline: none;
+  box-shadow: 0 0 0 2px #9bbbff;
+}
+
+
+/* Клетки лабиринта */
+.white.cell
+{
+  background-color: white; /* Цвет прохода */
+}
+
+.black.cell
+{
+  background-color: black; /* Цвет стены */
+}
+
+.visited.cell
+{
+  background-color: #afeeee; /* Цвет посещенных клеток */
+}
+
+.path.cell
+{
+  background-color: #fb8eff; /* Цвет пути */
+}
+
+.start.cell
+{
+  background-color: #00ff00; /* Цвет начальной клетки */
+}
+
+.goal.cell
+{
+  background-color: red; /* Цвет конечной клетки */
+}
+
+/* Таблица */
+#grid
+{
+  /* width: auto;
+  height: auto; */
+  margin: 0 auto;
+  border-spacing: 0;
+}
+
+/* Контейнер с лабиринтом */
+#labyrinthContainer
+{
+  justify-content: center;
+  align-items: center;
+  border-collapse: collapse;
+
+}
+
+/* Клетка */
+.cell
+{
+  /* max-width: 20px;
+  max-height: 20px;
+  width: 20px;
+  height: 20px; */
+  border: 2px solid black;
+  transition: border-color 0.3s ease;
+}
+
+.cell:hover
+{
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Увеличение клетки при смене цвета */
+.enlarge
+{
+  transform: scale(1.4);
+  transition: transform 0.01s;
+}
+
+/* Рамка для таблицы */
+.frameForGrid
+{
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.pathTravelling
+{
+  background-image: url("Задумчивый.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.pathFinished
+{
+  background-image: url("С цветочками.svg");
+  background-size: cover;
+  background-position: center;
+}
