@@ -1,0 +1,139 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+	<head> 
+	<meta charset="UTF-4"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>100x100 Squares</title> 
+		<style> 
+		.information{
+			position: relative;
+			top: 30px;
+			color: black; /* Цвет текста */
+			font-weight: bold;
+			font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+			text-align: center; /* Выравнивание текста по центру */
+			font-size: 25px; /* Размер шрифта */
+		}
+		.left {
+			width: 70%;
+			overflow: hidden;
+			height: 100vh;
+			background-color: lightblue;
+			float: left;
+		}
+		.right {
+			width: 30%;
+			height: 100vh;
+			float: left;
+		}
+		.container { 
+
+			position: absolute;
+
+			transform: translate(-50%, -50%);
+			margin-left: 35%;
+			margin-top: 95px;
+			top: 50%;
+			display: grid; 
+			grid-template-columns: repeat(10, 4px); /* Ширина каждого маленького квадрата */ 
+			grid-template-rows: repeat(10, 4px); /* Высота каждого маленького квадрата */ 
+		} 
+		.square { 
+			width: 4px; 
+			height: 4px; 
+			background-color: white; 
+			border: 0px solid black; 
+			user-select: none;
+		} 
+		.sliders {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			
+		}
+		.buttons {
+			display: flex;
+			
+			justify-content: space-between;
+			align-items: space-between;
+		}
+		.startGameButton{
+			height: 50px;
+			width: 100%;
+		}
+
+		.button {
+			
+			height: 40px;
+			flex:1;
+			padding-left: 4%;
+			padding-right: 4%;
+			padding-top: 1%;
+			padding-bottom: 1%;
+			
+			margin: 1px;
+			background-color: #928b8b;
+			cursor: pointer;
+		}
+
+		.header {
+			position: relative;
+			background-color: lightgreen; /* Цвет фона */
+			color: black; /* Цвет текста */
+			padding: 5px; /* Внутренний отступ */
+			font-weight: bold;
+			font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+			text-align: center; /* Выравнивание текста по центру */
+			font-size: 75px; /* Размер шрифта */
+		}
+		</style> 
+	</head> 
+	<body> 
+
+		<div class="header">
+			ANTS COLONY
+		</div>
+		
+		<div class="left">
+			<div class="information" id="countOfFoodO">Количество доставленной еды: 0</div>
+		<div class="container" id="container"></div>
+		</div> 	
+		<div class = "right">
+			
+
+			<div class="sliders">
+				<label><div id="foodCostsO">Ценность еды: 1</div><input type="range" id="foodCostsI" min="1" max="10" value="1" step="0.1"></label>
+
+				<label><div id="antsSpeedO">Скорость муравьев: 10</div><input type="range" id="antsSpeedI" min="2" max="1000" value="10" step="2"></label>
+				
+				<label><div id="worldSizeO">Размер: 10</div><input type="range" id="worldSizeI" min="10" max="200" value="10" step="10"></label>
+
+				<label><div id="antCountO">Количество муравьев: 10</div><input type="range" id="antCountI" min="10" max="200" value="10" step="10"></label>
+
+				<label><div id="evaporationSpeedO">Скорость испарения: 0.993</div><input type="range" id="evaporationSpeedI" min="0.95" max="0.999" value="0.993" step="0.001"></label>
+
+				<label><div id="increaseRewardO">Увеличить награду в: 11</div><input type="range" id="increaseRewardI" min="1" max="15" value="11" step="1"></label>
+
+				<label><div id="pheromoneEffectO">Приоритет феромонов: 4</div><input type="range" id="pheromoneEffectI" min="1" max="5" value="4" step="1"></label>
+
+				<label><div id="rewardForBadPathO">Приоритет хороших путей: 3</div><input type="range" id="rewardForBadPathI" min="1" max="5" value="3" step="1"></label>
+
+				<label><div id="nearCoefficientO">Награждать вокруг: 0.01</div><input type="range" id="nearCoefficientI" min="0.01" max="1" value="0.01" step="0.01"></label>
+
+			</div>
+			
+			<div class="buttons">
+				<button class = "button" id="CreateWalls">Создавать стены</button>
+				<button class = "button" id="CreateNest">Создать гнездо</button>
+				<button class = "button" id="CreateFood">Создать еду</button>
+			</div>
+				<button class = "startGameButton" id="MyButton">Начать симуляцию</button>
+			
+
+		</div>
+
+			<script src="code.js"> 
+			</script> 
+			
+	</body>
+</html>
