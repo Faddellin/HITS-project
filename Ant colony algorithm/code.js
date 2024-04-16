@@ -1,23 +1,28 @@
 mouseMode = "walls";
 sizeOfImg = 0;
 isMouseDown = false;
-increaseReward = 11;
-tracesCoefficient = 0;
+
+increaseReward = 4;
+tracesCoefficient = 2;
 antSpeed = 10;
-midOfNest = 0;
 countOfAnts = 10;
 chanceToGoToPheromones = 4;
-reducingRewardForBadPath = 3;
-evaporationRate = 0.993;
-maxCountOfPheromones = 20;
-minCountOfPheromones = 0.1;
-foodCosts = 1;
+reducingRewardForBadPath = 4;
+evaporationRate = 0.995;
+maxCountOfPheromones = 30;
+minCountOfPheromones = 0.01;
 countOfFoodOnBase = 0;
-nearCoefficient = 0.01;
+nearCoefficient = 0.3;
+
+midOfNest = 0;
+costOfFood = 1;
 isActive = 0;
+radiusOfDrawing = 2;
+isCircleDrawing = 0;
 
 class Ant {
 	waysOfMove = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]];
+	curLenOfWay = 0;
 	bringFood = 0;
 	antColor = "green";
 	way = new Set();
@@ -28,58 +33,58 @@ class Ant {
 	}
 
 	actionChoise(world){
-		let goal,pheromones,antColor,isBase;
+		let goal,pheromones,antColor,isBase, otherPheromoens;
 		if (this.bringFood == 0){
 			goal = 'hasFood';
 			pheromones = 'foodPheromones';
+			otherPheromoens = 'nestPheromones';
 			antColor = 'greenyellow';
-			isBase = 0;
 		}
 		else{
 			goal = 'isNest';
 			pheromones = 'nestPheromones';
+			otherPheromoens = 'foodPheromones';
 			antColor = 'green';
-			isBase = 1;
 		}
 		if(world.ceils[this.location][goal]){
 			this.antColor = antColor;
 
-			if(isBase == 0){
+			if(goal == 'hasFood'){
 				this.bringFood = world.ceils[this.location][goal];
 			}
 
 			let answer = Array.from(this.way);
-			world.bestWay = Math.min(world.bestWay,answer.length);
+			world.updateBestWays(answer.length);
 
+			this.curLenOfWay = 0;
+
+			let coefficientOfWay = pow(Math.min(world.bestWay)/answer.length,reducingRewardForBadPath);
 			for(let i = 0; i < answer.length; i++){
 
-				world.ceils[answer[i]][pheromones] += this.bringFood*increaseReward*pow(world.bestWay/answer.length,reducingRewardForBadPath);
+				world.ceils[answer[i]][pheromones] += this.bringFood*increaseReward*coefficientOfWay;
 
 				for(let j = -1;j<=1;j++){
 					for(let k = -1;k<=1;k++){
 						let neighbourCeils = answer[i]+j+k*world.xLen;
 						neighbourCeils = normalizeValue(neighbourCeils,world.xLen*world.yLen);
 						if(!world.ceils[neighbourCeils].isNest && !world.ceils[neighbourCeils].hasFood){
-							world.ceils[neighbourCeils][pheromones] += this.bringFood*increaseReward*nearCoefficient*pow(world.bestWay/answer.length,reducingRewardForBadPath);
+							world.ceils[neighbourCeils][pheromones] += this.bringFood*increaseReward*nearCoefficient*coefficientOfWay;
 						}
 					}
 				}
 
-				if (world.ceils[answer[i]][pheromones] < minCountOfPheromones){
-					world.ceils[answer[i]][pheromones] = minCountOfPheromones;
-				}
-
 			}
 
-			if(isBase == 1){
-				document.getElementById('countOfFoodO').textContent = "Количество доставленной еды: " + Math.floor(countOfFoodOnBase);
+			if(goal == 'isNest'){
 				countOfFoodOnBase += this.bringFood;
+				document.getElementById('countOfFoodO').textContent = "Количество доставленной еды: " + Math.floor(countOfFoodOnBase);
 				this.bringFood = 0;
 			}
 
 			this.way.clear();
 			return;
 		}
+		let pheromonesPriority = [];
 		let newDirections = [];
 		let steps = [];
 		let sum = 0;
@@ -96,7 +101,8 @@ class Ant {
 			
 			if (!world.ceils[newLocate].isOccupied){
 
-				sum+= pow(world.ceils[newLocate][pheromones],chanceToGoToPheromones);
+				pheromonesPriority.push(pow(world.ceils[newLocate][pheromones],chanceToGoToPheromones));
+				sum += pheromonesPriority[pheromonesPriority.length - 1];
 				
 				newDirections.push(direct);
 				steps.push(newLocate);
@@ -106,6 +112,7 @@ class Ant {
 			if (world.ceils[newLocate][goal]){
 
 				this.way.add(this.location);
+
 				world.ceils[this.location].linkToObject.style.backgroundColor = world.ceils[this.location].bgColour;
 				world.ceils[this.location].isOccupied = 0;
 				this.location = newLocate;
@@ -115,11 +122,16 @@ class Ant {
 				return;
 			}
 		}
-		this.move(world,pheromones, newDirections, steps, sum);
+
+		this.move(world,otherPheromoens, newDirections, steps, sum, pheromonesPriority);
 	}
 
-	move(world, pheromones, newDirections, steps, sum){
-		let check = this.location;
+	move(world, otherPheromoens, newDirections, steps, sum, pheromonesPriority){
+
+		if (steps.length == 0){
+			this.direction = (this.direction+1)%8;
+			return;
+		}
 
 		this.way.add(this.location);
 
@@ -130,24 +142,21 @@ class Ant {
 
 		for (let i = 0; i < steps.length; i++) {
 
-			sumToRandom += pow(world.ceils[steps[i]][pheromones],chanceToGoToPheromones) / sum;
+			sumToRandom += pheromonesPriority[i] / sum;
 
 			if (randomNum < sumToRandom) {
 
-				if (pheromones == "foodPheromones"){
-					world.ceils[this.location].nestPheromones = world.ceils[this.location].nestPheromones + 0.1 * tracesCoefficient;
-				}else{
-					world.ceils[this.location].foodPheromones = world.ceils[this.location].foodPheromones + 0.1 * tracesCoefficient;
-				}
+				this.curLenOfWay++;
+
+				let mnozitel = world.bestWay/this.curLenOfWay;
+
+				world.ceils[this.location][otherPheromoens] = world.ceils[this.location][otherPheromoens] + mnozitel * tracesCoefficient;
 
 				this.location = steps[i];
 				this.direction = newDirections[i];
+
 				break;
 			}
-		}
-
-		if (steps.length == 0){
-			this.direction = (this.direction+1)%8;
 		}
 
 		world.ceils[this.location].linkToObject.style.backgroundColor = this.antColor;
@@ -158,10 +167,8 @@ class Ant {
 class World{
 	ceils = [];
 	ants = [];
-	bestWay = 99999;
 	isWorldExist = 0;
-	nestCord = 0;
-
+	nestCord = -1;
 	
 	createWorld(xLen, yLen) {
 		
@@ -172,6 +179,8 @@ class World{
 		this.xLen = xLen;
 		this.yLen = yLen;
 		this.isWorldExist = 1;
+		this.nestCord = -1;
+		this.bestWay = xLen;
 
 		for (let i = 0; i < xLen*yLen; i++) { 
 			this.ceils.push(new Ceil);
@@ -184,28 +193,61 @@ class World{
 			container.appendChild(square); 
 			
 			square.addEventListener('mouseenter', () => {
+
 				if (isMouseDown && mouseMode == "walls"){
-					this.ceils[i].bgColour = "black";
-					this.ceils[i].linkToObject.style.backgroundColor = "black";
-					this.ceils[i].isOccupied = 1;
-					this.ceils[i].isWall = 1;
+
+					circleDrawing( isCircleDrawing, this.ceils, radiusOfDrawing, i, this.xLen, this.yLen, function(ceil){
+						ceil.isNest = 0;
+						ceil.hasFood = 0;
+						ceil.bgColour = "black";
+						ceil.linkToObject.style.backgroundColor = "black";
+						ceil.isOccupied = 1;
+						ceil.isWall = 1;
+					});
+
 				}
 			});
 			square.addEventListener('mousedown', () => {
+
 				if (mouseMode == "walls"){
-					this.ceils[i].bgColour = "black";
-					this.ceils[i].linkToObject.style.backgroundColor = "black";
-					this.ceils[i].isOccupied = 1;
-					this.ceils[i].isWall = 1;
+
+					circleDrawing( isCircleDrawing, this.ceils, radiusOfDrawing, i, this.xLen, this.yLen, function(ceil){
+						ceil.isNest = 0;
+						ceil.hasFood = 0;
+						ceil.bgColour = "black";
+						ceil.linkToObject.style.backgroundColor = "black";
+						ceil.isOccupied = 1;
+						ceil.isWall = 1;
+					});
+
 				}
 				if (mouseMode == "nest"){
+
 					this.createNest(i);
 				}
 				if (mouseMode == "food"){
-					this.createFood(i,foodCosts);
+
+					circleDrawing( isCircleDrawing, this.ceils, radiusOfDrawing, i, this.xLen, this.yLen, function(ceil){
+						ceil.hasFood = 1*costOfFood;
+						ceil.isWall = 0;
+						ceil.isOccupied = 0;
+						ceil.bgColour = "grey";
+						ceil.isNest = 0;
+						ceil.linkToObject.style.backgroundColor = "grey";
+					});
+
 				}
 			});
 		} 
+	}
+	updateBestWays(newWay){
+		if (newWay > this.bestWay*2){
+			this.bestWay++;
+		}else{
+			if(newWay < this.bestWay){
+				this.bestWay = newWay;
+			}
+		}
 	}
 	createNest(nestCord){
 		this.nestCord = nestCord;
@@ -217,34 +259,16 @@ class World{
 				this.ceils[i].linkToObject.style.backgroundColor = "white";
 			}
 		}
+		circleDrawing( isCircleDrawing, this.ceils, radiusOfDrawing, nestCord, this.xLen, this.yLen, function(ceil){
+			ceil.hasFood = 0;
+			ceil.isWall = 0;
+			ceil.isOccupied = 0;
+			ceil.bgColour = "yellow";
+			ceil.isNest = 1;
+			ceil.linkToObject.style.backgroundColor = "yellow";
+		});
+		
 
-		for(let lenX = -2;lenX<3;lenX++){
-			for(let lenY = -2;lenY<3;lenY++){
-				let coordinate = nestCord + lenX + lenY * this.xLen;
-				if (coordinate < 0){
-					coordinate = this.xLen*this.yLen + coordinate;
-				}
-				coordinate %= this.xLen*this.yLen;
-				this.ceils[coordinate].bgColour = "yellow";
-				this.ceils[coordinate].isNest = 1;
-				this.ceils[coordinate].linkToObject.style.backgroundColor = "yellow";
-			}
-		}
-
-	}
-	createFood(food, cost){
-		for(let lenX = -2;lenX<3;lenX++){
-			for(let lenY = -2;lenY<3;lenY++){
-				let coordinate = food + lenX + lenY*  this.xLen;
-				if (coordinate < 0){
-					coordinate = this.xLen*this.yLen + coordinate;
-				}
-				coordinate %= this.xLen*this.yLen;
-				this.ceils[coordinate].bgColour = "grey";
-				this.ceils[coordinate].hasFood = 1*cost;
-				this.ceils[coordinate].linkToObject.style.backgroundColor = "grey";
-			}
-		}
 	}
 	showPheromones() {
 		for(let i =0; i<this.xLen*this.yLen;i++){
@@ -252,8 +276,14 @@ class World{
 			let tmpCeil = this.ceils[i];
 
 			if (!tmpCeil.hasFood && !tmpCeil.isNest && !tmpCeil.isWall){
-				tmpCeil.nestPheromones *= evaporationRate;
-				tmpCeil.foodPheromones *= evaporationRate;
+
+				if(tmpCeil.nestPheromones> minCountOfPheromones){
+					tmpCeil.nestPheromones *= evaporationRate;
+				}
+				if(tmpCeil.foodPheromones> minCountOfPheromones){
+					tmpCeil.foodPheromones *= evaporationRate;
+				}
+
 				tmpCeil.bgColour= "rgb("+ (255 / maxCountOfPheromones) * (maxCountOfPheromones - this.ceils[i].foodPheromones) +","+ (255 / maxCountOfPheromones) * (maxCountOfPheromones - this.ceils[i].nestPheromones) +",255)";
 				if(!tmpCeil.isOccupied){
 					tmpCeil.linkToObject.style.backgroundColor = this.ceils[i].bgColour;
@@ -270,12 +300,12 @@ class World{
 
 		this.ceils = [];
 		this.ants = [];
-		this.bestWay = 99999;
+		this.bestWay = this.xLen;
 	}
 	startSimulation(){
 		countOfFoodOnBase = 0;
 		document.getElementById('countOfFoodO').textContent = "Количество доставленной еды: " + Math.floor(countOfFoodOnBase);
-		this.bestWay = 9999;
+		this.bestWay = this.xLen;
 		for(let i =0; i<this.xLen*this.yLen;i++){
 
 			let tmpCeil = this.ceils[i];
@@ -307,6 +337,26 @@ class Ceil{
 	linkToObject;
 }
 
+function circleDrawing( isCircle, ceils, radius, cord, xLen, yLen, needFunc){
+	for(let xCord = -radius;xCord<radius+1;xCord++){
+		for(let yCord = -radius;yCord<radius+1;yCord++){
+
+			let coordinate = cord + xCord + yCord * xLen;
+			
+			if (coordinate < 0){
+				coordinate = xLen * yLen + coordinate;
+			}
+			coordinate %= xLen * yLen;
+
+			if(isCircle && Math.abs(xCord)+Math.abs(yCord)>radius){
+				continue;
+			}
+			needFunc(ceils[coordinate]);
+
+		}
+	}
+}
+
 function normalizeValue(meaning,size){
 	if(meaning < 0){
 		meaning = size+meaning;
@@ -316,7 +366,9 @@ function normalizeValue(meaning,size){
 
 
 function Steps(){
+
 	world.showPheromones();
+	
 	for(let i =0;i<countOfAnts;i++){
 		world.ants[i].actionChoise(world);
 	}
@@ -350,19 +402,23 @@ function blockElements(isBlock){
 }
 
 world = new World;
-world.createWorld(10, 10);
 
 document.getElementById("MyButton").addEventListener('click', function() {
+	if(world.nestCord == -1){
+		alert('Невозможно начать симуляцию без гнезда');
+		return;
+	}
 	if(!isActive){
 		blockElements(0);
 		document.getElementById("MyButton").textContent = "Прекратить симуляцию"
 		isActive = 1;
 		world.startSimulation();
-		Steps(world);
+		Steps(0);
 	}else{
 		blockElements(1);
 		document.getElementById("MyButton").textContent = "Начать симуляцию"
 		isActive = 0;
+		
 	}
 	
 });
@@ -387,13 +443,14 @@ document.getElementById('worldSizeI').addEventListener('input', () => {
 
 	document.querySelector('.container').style.gridTemplateColumns = 'repeat('+ sizeOfImg + ', 4px)';
 	document.querySelector('.container').style.gridTemplateRows = 'repeat('+ sizeOfImg + ', 4px)';
+	document.querySelector('.container').style.transform = 'translate(' + -sizeOfImg*2 + 'px, ' + (500-sizeOfImg*2) + 'px)';
 
 	world.createWorld(sizeOfImg,sizeOfImg);
 });
 
 document.getElementById('foodCostsI').addEventListener('input', () => {
 	document.getElementById('foodCostsO').textContent = "Ценность еды: " + document.getElementById('foodCostsI').value;
-	foodCosts = document.getElementById('foodCostsI').value;
+	costOfFood = document.getElementById('foodCostsI').value;
 });
 
 document.getElementById('antCountI').addEventListener('input', () => {
@@ -424,6 +481,20 @@ document.getElementById('rewardForBadPathI').addEventListener('input', () => {
 document.getElementById('nearCoefficientI').addEventListener('input', () => {
 	document.getElementById('nearCoefficientO').textContent = "Награждать вокруг: " + document.getElementById('nearCoefficientI').value;
 	nearCoefficient = document.getElementById('nearCoefficientI').value;
+});
+
+document.getElementById('radiusOfBuildingsI').addEventListener('input', () => {
+	document.getElementById('radiusOfBuildingsO').textContent = "Радиус построек: " + document.getElementById('radiusOfBuildingsI').value;
+	radiusOfDrawing = document.getElementById('radiusOfBuildingsI').value - 1;
+});
+
+document.getElementById('isCircleI').addEventListener('change', () => {
+	if (document.getElementById('isCircleI').checked) {
+		isCircleDrawing = 1;
+	} else {
+		isCircleDrawing = 0;
+	}
+
 });
 
 document.addEventListener('mousedown', () => {
