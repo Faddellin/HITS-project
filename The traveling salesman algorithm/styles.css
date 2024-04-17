@@ -1,0 +1,82 @@
+.information{
+	position: relative;
+	top: 30px;
+	color: black; 
+	font-weight: bold;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	text-align: center; 
+	font-size: 25px; 
+}
+.mainCanvas{
+	border: 4px solid black;
+	background-color: white;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	margin-left: 35%;
+	margin-top: 95px;
+	top: 50%;
+}
+.left {
+	width: 70%;
+	overflow: hidden;
+	height: 100vh;
+	background-color: lightblue;
+	float: left;
+}
+.right {
+	width: 30%;
+	height: 100vh;
+	float: left;
+}
+.square { 
+	width: 4px; 
+	height: 4px; 
+	background-color: white; 
+	user-select: none;
+} 
+.sliders {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	align-items: space-between;
+}
+.startGameButton{
+	height: 50px;
+	width: 100%;
+}
+.button {
+	
+	height: 40px;
+	flex:1;
+	padding-left: 4%;
+	padding-right: 4%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	
+	margin: 1px;
+	background-color: #928b8b;
+	cursor: pointer;
+}
+.header {
+	position: relative;
+	background-color: lightgreen;
+	color: black;
+	padding: 5px;
+	font-weight: bold;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	text-align: center;
+	font-size: 75px;
+}
+.headerOfRightPart{
+	position: relative;
+	color: black;
+	padding: 5px;
+	font-weight: bold;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	text-align: center;
+	font-size: 40px;
+}

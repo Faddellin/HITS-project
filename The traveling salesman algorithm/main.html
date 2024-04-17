@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+	<head> 
+	<meta charset="UTF-4"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>100x100 Squares</title> 
+		<link rel="stylesheet" href="styles.css">
+	</head> 
+	<body> 
+		
+		<div class="header">
+			Genetic algorithm
+		</div>
+		
+		<div class="left">
+			<div class="information" id="wayLenO">Текущая длина пути: ?</div>
+			<div class="information" id="countOfPoints">Количество точек: ?</div>
+			<canvas class="mainCanvas" id="myCanvas" width="800" height="800"></canvas>
+		</div>
+		<div class = "right">
+			<div class ="headerOfRightPart">Settings</div>
+			<div class="sliders">
+
+				<label><div id="pointsRadiusO">Радиус точек: 5</div><input type="range" id="pointsRadiusI" min="1" max="20" value="5" step="1"></label>
+				
+				<label><div id="linesWidthO">Ширина линий: 3</div><input type="range" id="linesWidthI" min="1" max="20" value="3" step="1"></label>
+
+			</div>
+			<div class="buttons">
+				<button class="clearButton" id="clearButton">Очистить карту</button>
+				<button class="startGameButton" id="myButton">Начать поиск</button>
+			</div>
+		</div>
+		
+		<script src="code.js"> 
+		</script> 
+		  
+			
+	</body>
+</html>
