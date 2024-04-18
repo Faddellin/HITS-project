@@ -1,0 +1,355 @@
+body
+{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #1a1a1d;
+  color: white;
+  margin: 0;
+  margin-bottom: 1%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header
+{
+  width: 100%;
+  background-color: #1a1a1d;
+  padding: 0.5% 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+/* Иконки в кнопках */
+.icon
+{
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: 0.5em;
+}
+
+/* Изображение и вращение */
+.image
+{
+  cursor: pointer;
+width: 80px;
+height: 80px;
+margin-right: 30px;
+animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate
+{
+0% {
+  transform: rotate(0deg);
+}
+100% {
+  transform: rotate(360deg);
+}
+}
+
+.buttons
+{
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.buttons button
+{
+    flex-grow: 1;
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #1a1a1d;
+    color: #ffffff;
+    border-color: rgb(195, 7, 63);
+    border-radius: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.buttons button:hover {
+    background-color: rgba(195, 7, 63, 0.8)
+}
+
+
+/* Надписи label */
+label
+{
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 500;
+}
+
+.disabledCells
+{
+  pointer-events: none;
+}
+
+/* Всплывающее окно */
+.popup
+{
+  color: white;
+  text-align: center;
+  max-width: 200px;
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.popup.fadeOut
+{
+  animation-name: fadeOut;
+}
+
+.closePopup
+{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.closePopup:hover
+{
+  color: #bbb;
+}
+
+@keyframes fadeIn
+{
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut
+{
+  0%
+  {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100%
+  {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+input[type="range"]
+{
+  -webkit-appearance: none;
+  appearance: none;
+  /* width: 100%; */
+  /* height: 5px; */
+  background: rgb(255, 255, 255);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.5%;
+}
+
+/* Слайдеры */
+input[type="range"]::-webkit-slider-thumb
+{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: rgb(195, 7, 63);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover
+{
+  background: rgb(111, 3, 35);
+}
+
+/* Значение слайдера */
+#labyrinthSizeValue, #algorithmSpeedValue
+{
+  color: white;
+  /* -webkit-text-stroke: 0.65px rgb(0, 0, 0); */
+}
+
+/* Кнопки */
+.customisedButton
+{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1%;
+  border-radius: 10px;
+  border-color: rgb(195, 7, 63);
+  color: #ffffff;
+  background-color: #1a1a1d;
+  padding: 4px 8px;
+  font-size: 14px;
+  min-width: 50px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.customisedButton:disabled
+{
+  cursor: default;
+  border: none;
+  background-color: gray;
+}
+
+.customisedButton:hover:enabled
+{
+  background-color: rgba(195, 7, 63, 0.8)
+}
+
+
+/* Клетки лабиринта */
+.white.cell
+{
+  background-color: white; /* Цвет прохода */
+}
+
+.black.cell
+{
+  background-color: black; /* Цвет стены */
+}
+
+.possible.cell
+{
+  background-color: rgb(159, 233, 159);
+}
+
+.visited.cell
+{
+  background-color: #79f8f8; /* Цвет посещенных клеток */
+}
+
+.path.cell
+{
+  background-color: #fb8eff; /* Цвет пути */
+}
+
+.start.cell
+{
+  background-color: #00ff00; /* Цвет начальной клетки */
+}
+
+.goal.cell
+{
+  background-color: red; /* Цвет конечной клетки */
+}
+
+/* Таблица */
+#grid
+{
+  /* width: auto;
+  height: auto; */
+  margin: 0 auto;
+  border-spacing: 0;
+}
+
+/* Контейнер с лабиринтом */
+#labyrinthContainer
+{
+  justify-content: center;
+  align-items: center;
+  border-collapse: collapse;
+
+}
+
+/* Клетка */
+.cell
+{
+  /* max-width: 20px;
+  max-height: 20px;
+  width: 20px;
+  height: 20px; */
+  border: 2px solid black;
+  transition: border-color 0.3s ease;
+}
+
+.cell:hover
+{
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Увеличение клетки при смене цвета */
+.enlarge
+{
+  transform: scale(1.4);
+  transition: transform 0.01s;
+}
+
+/* Рамка для таблицы */
+.frameForGrid
+{
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.pathTravelling
+{
+  background-image: url("Mouse.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.pathFinish
+{
+  background-image: url("Cheese.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+	body
+	{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	
+    .header {
+		margin-bottom: 1%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buttons {
+		display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .image {
+        margin-right: 0;
+    }
+}

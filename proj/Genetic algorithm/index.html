@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+	<head> 
+	<meta charset="UTF-4"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Genetic algorithm</title> 
+		<link rel="stylesheet" href="styles.css">
+	</head> 
+	<body> 
+		<div class="header">
+			<img src="/HITS icon.svg" alt="Logo" class="image" style="filter: invert(100%);" onclick="redirect('/Landing page/index.html')">
+			<div class="buttons">
+				<button onclick="redirect('/AStar algorithm/index.html')"><img src="/Labyrinth icon.svg" alt="Logo" class="icon"> A*</button>
+				<button onclick="redirect('/Clustering algorithm/index.html')"><img src="/Ore icon.svg" alt="Logo" class="icon"> Алгоритм кластеризации</button>
+				<button onclick="redirect('/Genetic algorithm/index.html')"><img src="/DNA icon.svg" alt="Logo" class="icon"> Генетический алгоритм</button>
+				<button onclick="redirect('/Ant colony algorithm/index.html')"><img src="/Ant icon.svg" alt="Logo" class="icon"> Муравьиный алгоритм</button>
+				<button onclick="redirect('/Decision tree algorithm/index.html')"><img src="/Tree icon.svg" alt="Logo" class="icon"> Дерево решений</button>
+				<button onclick="redirect('/Neural network/index.html')"><img src="/AI icon.svg" alt="Logo" class="icon"> Нейронная сеть</button>
+			</div>
+		</div>
+		
+		<div class="left">
+			<div class="information">
+				<p id="wayLenO">Текущая длина пути: ?</p>
+				<p id="countOfPoints">Количество точек: ?</p>
+			</div>
+			<canvas class="mainCanvas" id="myCanvas" width="500px" height="500px"></canvas>
+		</div>
+		<div class = "right">
+			<div class ="headerOfRightPart">Settings</div>
+			<div class="sliders">
+
+				<label><div id="pointsRadiusO">Радиус точек: 5</div><input type="range" id="pointsRadiusI" min="1" max="20" value="5" step="1"></label>
+				
+				<label><div id="linesWidthO">Ширина линий: 3</div><input type="range" id="linesWidthI" min="1" max="20" value="3" step="1"></label>
+
+			</div>
+			<div class="buttons" style="margin-top: 2%;">
+				<button class="clearButton" id="clearButton">Очистить карту</button>
+				<button class="startGameButton" id="myButton">Начать поиск</button>
+			</div>
+		</div>
+
+		<div id="popup" class="popup">
+			<span class="closePopup">&times;</span>
+			<p id="popupText"></p>
+		</div>
+		
+		<script src="code.js"> 
+		</script> 
+		  
+			
+	</body>
+	<script>
+		function redirect(path)
+		{
+			window.location.href = path;
+		}
+	</script>
+</html>

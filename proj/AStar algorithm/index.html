@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* algorithm</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <img src="/HITS icon.svg" alt="Logo" class="image" style="filter: invert(100%);" onclick="redirect('/Landing page/index.html')">
+        <div class="buttons">
+            <button onclick="redirect('/AStar algorithm/index.html')"><img src="/Labyrinth icon.svg" alt="Logo" class="icon"> A*</button>
+            <button onclick="redirect('/Clustering algorithm/index.html')"><img src="/Ore icon.svg" alt="Logo" class="icon"> Алгоритм кластеризации</button>
+            <button onclick="redirect('/Genetic algorithm/index.html')"><img src="/DNA icon.svg" alt="Logo" class="icon"> Генетический алгоритм</button>
+            <button onclick="redirect('/Ant colony algorithm/index.html')"><img src="/Ant icon.svg" alt="Logo" class="icon"> Муравьиный алгоритм</button>
+            <button onclick="redirect('/Decision tree algorithm/index.html')"><img src="/Tree icon.svg" alt="Logo" class="icon"> Дерево решений</button>
+            <button onclick="redirect('/Neural network/index.html')"><img src="/AI icon.svg" alt="Logo" class="icon"> Нейронная сеть</button>
+        </div>
+    </div>
+
+    <form style="text-align: center; margin-bottom: 2%; margin-top: 1%;" id="labyrinthForm">
+        <label for="labyrinthSize">Выберите размер лабиринта</label><br>
+        <input type="range" id="labyrinthSize" name="labyrinthSize" value="10" min="3" max="128">
+        <span id="labyrinthSizeValue">10</span><br>
+        <button type="submit" id="submitButton" class="customisedButton" style="margin-top: 2%;">Submit</button>
+        <button type="button" id="resetButton" style="display: none;" class="customisedButton">Reset</button>
+        <button type="button" id="generateLabyrinth" style="display: none;" class="customisedButton">Generate</button>
+        <button type="button" id="startCellButton" style="display: none;" class="customisedButton">Выбрать начальную клетку</button>
+        <button type="button" id="goalCellButton" style="display: none;" class="customisedButton">Выбрать конечную клетку</button>
+        <div style="display: inline-block;">
+            <label id="algorithmSpeedLabel" style="display: none;">Скорость поиска</label><br>
+            <input type="range" id="algorithmSpeed" value="3" min="1" max="5" style="display: none; margin-top: 2%;">
+            <span id="algorithmSpeedValue" style="display: none;">3</span>
+        </div>
+        <div style="display: inline-block;">
+            <label id="pathTraverseSpeedLabel" style="display: none;">Скорость перемещения</label><br>
+            <input type="range" id="pathTraverseSpeed" value="1" min="1" max="5" style="display: none; margin-top: 2%;">
+            <span id="pathTraverseSpeedValue" style="display: none;">1</span>
+        </div><br>
+        <button type="button" id="startAlgorithm" style="display: none; margin-top: 0.5%;" class="customisedButton">Начать поиск</button>
+    </form>
+    <div id="labyrinthContainer" class="labyrinthContainer">
+        <table id="grid"></table>
+    </div>
+    <div id="popup" class="popup">
+        <span class="closePopup">&times;</span>
+        <p id="popupText"></p>
+    </div>
+</body>
+<script type="module" src="script.js"></script>
+<script>
+    function redirect(path)
+    {
+        window.location.href = path;
+    }
+</script>
+</html>

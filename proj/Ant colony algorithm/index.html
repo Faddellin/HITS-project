@@ -1,0 +1,79 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+	<head> 
+	<meta charset="UTF-4"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Ant colony algorithm</title> 
+		<link rel="stylesheet" href="styles.css">
+	</head> 
+	<body> 
+		<div class="header">
+			<img src="/HITS icon.svg" alt="Logo" class="image" style="filter: invert(100%);" onclick="redirect('/Landing page/index.html')">
+			<div class="buttons">
+				<button onclick="redirect('/AStar algorithm/index.html')"><img src="/Labyrinth icon.svg" alt="Logo" class="icon"> A*</button>
+				<button onclick="redirect('/Clustering algorithm/index.html')"><img src="/Ore icon.svg" alt="Logo" class="icon"> Алгоритм кластеризации</button>
+				<button onclick="redirect('/Genetic algorithm/index.html')"><img src="/DNA icon.svg" alt="Logo" class="icon"> Генетический алгоритм</button>
+				<button onclick="redirect('/Ant colony algorithm/index.html')"><img src="/Ant icon.svg" alt="Logo" class="icon"> Муравьиный алгоритм</button>
+				<button onclick="redirect('/Decision tree algorithm/index.html')"><img src="/Tree icon.svg" alt="Logo" class="icon"> Дерево решений</button>
+				<button onclick="redirect('/Neural network/index.html')"><img src="/AI icon.svg" alt="Logo" class="icon"> Нейронная сеть</button>
+			</div>
+		</div>
+		
+		<div class="left">
+			<div class="information" id="countOfFoodO">Количество доставленной еды: 0</div>
+		<div class="container" id="container"></div>
+		</div> 	
+		<div class = "right">
+			
+			<div class ="headerOfRightPart">Settings</div>
+			<div class="sliders">
+				<label><div id="antsSpeedO">Скорость муравьев: 10</div><input type="range" id="antsSpeedI" min="2" max="1000" value="10" step="2"></label>
+				
+				<label><div id="worldSizeO">Размер: 10</div><input type="range" id="worldSizeI" min="10" max="200" value="10" step="10"></label>
+
+				<label><div id="antCountO">Количество муравьев: 10</div><input type="range" id="antCountI" min="10" max="500" value="10" step="10"></label>
+
+				<label><div id="evaporationSpeedO">Скорость испарения: 0.995</div><input type="range" id="evaporationSpeedI" min="0.95" max="0.999" value="0.993" step="0.001"></label>
+
+				<label><div id="increaseRewardO">Увеличить награду в: 4</div><input type="range" id="increaseRewardI" min="0" max="15" value="4" step="1"></label>
+
+				<label><div id="pheromoneEffectO">Приоритет феромонов: 4</div><input type="range" id="pheromoneEffectI" min="1" max="5" value="4" step="1"></label>
+
+				<label><div id="rewardForBadPathO">Приоритет хороших путей: 4</div><input type="range" id="rewardForBadPathI" min="1" max="5" value="4" step="1"></label>
+
+				<label><div id="nearCoefficientO">Награждать вокруг: 0.3</div><input type="range" id="nearCoefficientI" min="0.01" max="1" value="0.1" step="0.01"></label>
+
+				<label><div id="foodCostsO">Ценность еды: 1</div><input type="range" id="foodCostsI" min="1" max="10" value="1" step="0.1"></label>
+
+				<label><div id="radiusOfBuildingsO">Радиус построек: 3</div><input type="range" id="radiusOfBuildingsI" min="1" max="10" value="3" step="1"></label>
+
+				<label><div id="isCircleO">Рисовать окружностью</div><input type="checkbox" id="isCircleI"></label>
+
+			</div>
+			
+			<div class="buttons">
+				<button class = "button" id="CreateWalls">Создавать стены</button>
+				<button class = "button" id="CreateNest">Создать гнездо</button>
+				<button class = "button" id="CreateFood">Создать еду</button>
+			</div>
+			<div class="buttons">
+				<button class = "button" id="MyButton" style="margin-top: 2%;">Начать симуляцию</button>
+			</div>
+
+			<div id="popup" class="popup">
+				<span class="closePopup">&times;</span>
+				<p id="popupText"></p>
+			</div>
+
+			<script src="code.js"> 
+			</script> 
+			
+	</body>
+
+	<script>
+		function redirect(path)
+		{
+			window.location.href = path;
+		}
+	</script>
+</html>
