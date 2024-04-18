@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel = "stylesheet"  href="style.css">
+<title>Coordinate Grid</title>
+</head>
+<body>
+<label>Количество кластеров</label>
+<input type="number" id="ClustersAmount" value="2" min="2" class="field">
+<button id="runAlgorithm">Запустить алгоритм</button>
+<button id="resetProgram">Сбросить настройки</button>
+<button id="addCentroid">Установить центройд</button>
+<button id="setRandomPoints" onclick="generateRandomPointsStart()">Установить точки случайно</button>
+<div id="popupRandom" class="popup">
+    <label for="data">Введите количество точек:</label>    
+    <input type="number" id="data" name="data">
+    <input type="submit"  id="sendData" value="Сгенерировать точки">
+</div>
+<div class="canvas">
+    <canvas id="gridCanvas" width="300" height="300"></canvas>
+    <canvas id ="secondCanvas" width="300" height="300"></canvas>
+    <canvas id ="thirdCanvas" width="300" height="300"></canvas>
+</div>
+
+
+<div class="sliders">
+
+    <label>Эпсилон Окрестности </label>
+    <br>
+    <input type="range" min="1" max="50" step ="1" value="3" class="slider" id="epsilon">
+    <label id="sliderValue" class="values">3</label>
+    <br>
+    <br>
+    <label>Количество соседей</label>
+    <br>
+    <input type="range" min="2" max="15" step ="1" value="2" class="slider" id="neighbors">
+    <label id="neighborsValue" class="values">2</label>
+</div>
+<div class="distances">
+    <p>Метрики расстояния:</p>
+    <input type="radio" id="Eucledean" name="distanceFormat" value="1" checked>
+    <label for="Eucledean">Расстояние Евклида</label>
+    <br>
+
+    <input type="radio" id="Chebyshev" name="distanceFormat" value="3">
+    <label for="Chebyshev">Расстояние Чебышева</label>
+    <br>
+
+    <input type="radio" id="L1" name="distanceFormat" value="2">
+    <label for="L1">Манхетенское расстояние </label>
+</div>
+<div id="popup" class="popup">
+    <span class="closePopup">&times;</span>
+    <p id="popupText"></p>
+</div>
+<script src="clusters.js">
+</script>
+</body>
+</html> 
