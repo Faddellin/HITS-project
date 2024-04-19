@@ -76,6 +76,13 @@ body
     text-align: center;
 }
 
+.buttons button:disabled
+{
+  cursor: default;
+  border: none;
+  background-color: gray;
+}
+
 .buttons button:hover {
     background-color: rgba(195, 7, 63, 0.8)
 }
