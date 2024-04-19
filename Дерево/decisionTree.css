@@ -1,0 +1,23 @@
+#atributes{
+    width: 280px;
+ }
+ .settings{
+     border-radius: 10px;
+     display: inline-block;
+ }
+
+ #mynetwork {
+    width: 600px;
+    height: 600px;
+    border: 1px solid lightgray;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+    max-width: 20%;
+}
+.treeNode{
+    border: #c3073f;
+   
+}
+ 

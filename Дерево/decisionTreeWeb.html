@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel = "stylesheet"  href="decisionTree.css">
+</head>
+<body>
+    <div class="input">
+    <input type="text" id="atributes" class="settings"  placeholder="Введите желаемые атрибуты в формате csv">
+    <input type="text" id="targetClass" class="settings" placeholder="Введите целевой атрибут">
+    <input type="text" id="newDecision" class="settings"placeholder="Введите данные для прогнозирования"><br><br>
+    <label>Доля оптимизации размера дерева</label>
+    <input type="range" min="0.05" max="1" step ="0.05" value="0.05" class="slider" id="prunePercent">
+    <label id="sliderValue" class="values">0.05</label>
+    </div>
+    <div>
+    <textarea id="csvInput" class="settings" rows="10" cols="50"></textarea><br>
+    <button onclick="getDecisionTree()">Обучить дерево</button>
+    <button onclick="runAlgorithm()">Сделать предсказание</button>
+    <button onclick="showPrunedTree()">Оптимизировать размер дерева</button>
+    <button id="displayTree">Скрыть Дерево</button>
+    </div>
+    <div id="mynetwork"></div>
+    <script src="decisonTree.js">
+    </script>
+</body>
+</html>
