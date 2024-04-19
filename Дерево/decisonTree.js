@@ -1,7 +1,7 @@
 let nodesId = [];
 let net;
 let container = document.getElementById('mynetwork');
-let displayStyle = 0;
+let displayStyle = 1;
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('prunePercent');
     const sliderValue = document.getElementById('sliderValue');
@@ -299,6 +299,23 @@ function copyObjectWithoutKey(obj, keyToRemove) {
     return copiedObject;
 }
 
+function deepCopyArray(arr) {
+    return arr.map(item => Array.isArray(item) ? deepCopyArray(item) : (item instanceof Object) ? deepCopyObject(item) : item);
+}
+
+function deepRemoveFromArray(arr, itemToRemove) {
+    for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            deepRemoveFromArray(arr[i], itemToRemove);
+        } else if (arr[i] instanceof Object) {
+            deepRemoveFromObject(arr[i], itemToRemove);
+        } else if (arr[i] === itemToRemove) {
+            arr.splice(i, 1);
+            i--;
+        }
+    }
+    return arr;
+}
 
 
 let data = [];
@@ -341,7 +358,8 @@ function createObject(atributesName){
 }
 
 function runAlgorithm(){
-    let attributesNameInstance = copyObjectWithoutKey(attributesName,targetAttribute);
+    let attributesNameInstance = deepCopyArray(attributesName);
+    attributesNameInstance = deepRemoveFromArray(attributesNameInstance,targetAttribute);
     console.log(nodesId);
     cleanWay(nodesId,net,0);
     nodesId = [];
@@ -349,7 +367,7 @@ function runAlgorithm(){
     const instanceToClassify = createObject(attributesNameInstance);
 
     for(let i = 0;i<stringInstance.length;i++){
-        instanceToClassify[attributesName[i]] = stringInstance[i];
+        instanceToClassify[attributesNameInstance[i]] = stringInstance[i];
     }
         const predictedClass = classify(decisionTree, instanceToClassify,targetAttribute);
         showDecision(nodesId,net,0);
@@ -485,13 +503,14 @@ function classify(decisionTree,instanceToClassify,targetAttribute){
 }
 
 function showDecision(nodesId,network,rootId){
+    let classNode = nodesId[nodesId.length-1];
     for(let node of nodesId){
 
-        if(node!==rootId){
+        if(node!==rootId && node!==classNode){
             network.body.data.nodes.update({ id: node, color: "green" });
         }
     }
-
+    network.body.data.nodes.update({ id: classNode, color:{background:"green", border:"red" }});
     colorEdges(nodesId,network,"green");
 }
 
@@ -499,7 +518,7 @@ function cleanWay(nodesId,network,rootId){
     for(let node of nodesId){
 
         if(node!==rootId){
-            network.body.data.nodes.update({ id: node, border: "#c3073f",color:"#b3ffff"});
+            network.body.data.nodes.update({ id: node, color:{ border:"#c3073f",background:"#b3ffff"}});
         }
     }
 
@@ -528,26 +547,18 @@ function colorEdges(nodesId,network,color){
 function showPrunedTree(){
 
    let  prunedTree = prune(decisionTree,data);
-    let rootId = prunedTree.Id;
-
     showTree(prunedTree);
-
-    var network = new vis.Network(container, dataVis, options);
-    network.body.data.nodes.update({ id: rootId, color: "red",shape:"circle" });
-    net = network;
     
 }
 
 let displayTreeButton  = document.getElementById("displayTree");
 displayTreeButton.addEventListener('click',function(){
     if(displayStyle === 1){
-        displayTreeButton.textContent = "Скрыть Дерево";
         displayStyle = 0;
         displayTreeButton.textContent = "Показать Дерево";
         container.style.display = "none";
     }
     else{
-        displayTreeButton.textContent = "Показать Дерево";
         displayStyle  = 1;
         container.style.display = "inline-block";
         displayTreeButton.textContent = "Скрыть Дерево";
