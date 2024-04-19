@@ -80,6 +80,14 @@ body
     background-color: rgba(195, 7, 63, 0.8)
 }
 
+.buttons button:disabled
+{
+  cursor: default;
+  border: none;
+  background-color: gray;
+}
+
+
 .information{
 	position: relative;
 	top: 30px;
@@ -136,7 +144,6 @@ body
 	font-family: inherit;
 	text-align: center;
 	font-size: 15px;
-	background-color: #928b8b;
 	height: 50px;
 	width: 100%;
 }
