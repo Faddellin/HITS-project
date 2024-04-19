@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision tree algorithm</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel = "stylesheet"  href="decisionTree.css">
+</head>
+<body>
+    <div class="header">
+        <img src="../HITS icon.svg" alt="Logo" class="image" style="filter: invert(100%);" onclick="redirect('../Landing page/index.html')">
+        <div class="buttons">
+            <button onclick="redirect('../AStar algorithm/index.html')"><img src="../Labyrinth icon.svg" alt="Logo" class="icon"> A*</button>
+            <button onclick="redirect('../Clustering algorithm/index.html')"><img src="../Ore icon.svg" alt="Logo" class="icon"> Алгоритм кластеризации</button>
+            <button onclick="redirect('../Genetic algorithm/index.html')"><img src="../DNA icon.svg" alt="Logo" class="icon"> Генетический алгоритм</button>
+            <button onclick="redirect('../Ant colony algorithm/index.html')"><img src="../Ant icon.svg" alt="Logo" class="icon"> Муравьиный алгоритм</button>
+            <button onclick="redirect('../Decision tree algorithm/index.html')"><img src="../Tree icon.svg" alt="Logo" class="icon"> Дерево решений</button>
+            <button onclick="redirect('../Neural network/index.html')"><img src="../AI icon.svg" alt="Logo" class="icon"> Нейронная сеть</button>
+        </div>
+    </div>
+
+    <div class="parameters">
+    <div><textarea id="csvInput" class="settings" rows="10" cols="50"></textarea></div>
+
+    <div class="input">
+    <input type="text" id="atributes" class="settings"  placeholder="Введите желаемые атрибуты в формате csv">
+    <input type="text" id="targetClass" class="settings" placeholder="Введите целевой атрибут">
+    <input type="text" id="newDecision" class="settings"placeholder="Введите данные для прогнозирования"><br><br>
+    <label>Доля оптимизации размера дерева</label>
+    <input type="range" min="0.05" max="1" step ="0.05" value="0.05" class="slider" id="prunePercent">
+    <label id="sliderValue" class="values">0.05</label>
+    </div>
+    </div>
+    <div>
+    
+    <div class="buttons2">
+    <button onclick="getDecisionTree()">Обучить дерево</button>
+    <button onclick="runAlgorithm()">Сделать предсказание</button>
+    <button onclick="showPrunedTree()">Оптимизировать размер дерева</button>
+    <button id="displayTree">Скрыть Дерево</button>
+    </div>
+    </div>
+    <div class="derevo">
+    <div id="mynetwork"></div>
+    </div>
+
+    <div id="popup" class="popup">
+        <span class="closePopup">&times;</span>
+        <p id="popupText"></p>
+    </div>
+    <script src="decisonTree.js">
+    </script>
+    <script>
+        function redirect(path)
+        {
+            window.location.href = path;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #1a1a1d;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+.header {
+    width: 100%;
+    background-color: #1a1a1d;
+    padding: 0.5% 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+/* Иконки в кнопках */
+.icon
+{
+    height: 1.5em;
+    width: 1.5em;
+    margin-right: 0.5em;
+}
+
+
+/* Изображение и вращение */
+.image
+{
+    cursor: pointer;
+width: 80px;
+height: 80px;
+margin-right: 30px;
+animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate
+{
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+.buttons
+{
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.buttons button
+{
+    flex-grow: 1;
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #1a1a1d;
+    color: #ffffff;
+    border-color: rgb(195, 7, 63);
+    border-radius: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.buttons button:hover {
+    background-color: rgba(195, 7, 63, 0.8)
+}
+
+button
+{
+    padding: 10px 20px;
+    background-color: #1a1a1d;
+    color: #ffffff;
+    border-color: rgb(195, 7, 63);
+    border-radius: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgba(195, 7, 63, 0.8)
+}
+
+.parameters
+{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+#atributes{
+    width: 280px;
+ }
+ .settings{
+     border-radius: 10px;
+     display: inline-block;
+ }
+
+ #mynetwork {
+    width: 600px;
+    height: 600px;
+    border: 1px solid rgb(195, 7, 63);
+}
+.input{
+    margin-left: 2%;
+    display: flex;
+    flex-direction: column;
+    max-width: 20%;
+    justify-content: center;
+}
+.treeNode{
+    border: #c3073f;
+   
+}
+ 
+label
+{
+    text-align: center;
+}
+
+.input > input, label
+{
+    margin-bottom: 2%;
+}
+
+.buttons2, .derevo
+{
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+textarea, input
+{
+    font-family: inherit;
+}
+
+input[type="range"]
+{
+  -webkit-appearance: none;
+  appearance: none;
+  /* width: 100%; */
+  /* height: 5px; */
+  background: rgb(255, 255, 255);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.5%;
+}
+
+/* Слайдеры */
+input[type="range"]::-webkit-slider-thumb
+{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: rgb(195, 7, 63);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover
+{
+  background: rgb(111, 3, 35);
+}
+
+
+.popup
+{
+  color: white;
+  text-align: center;
+  max-width: 200px;
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.popup.fadeOut
+{
+  animation-name: fadeOut;
+}
+
+.closePopup
+{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.closePopup:hover
+{
+  color: #bbb;
+}
+
+@keyframes fadeIn
+{
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut
+{
+  0%
+  {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100%
+  {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
