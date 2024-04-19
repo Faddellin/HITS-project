@@ -1,7 +1,9 @@
+import{getKeyByValue,deepCopyArray,deepRemoveFromArray,createObject} from "./secondaryFunctions.js";
 let nodesId = [];
 let net;
 let container = document.getElementById('mynetwork');
 let displayStyle = 1;
+
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('prunePercent');
     const sliderValue = document.getElementById('sliderValue');
@@ -198,9 +200,6 @@ function calculateInfoGain(attribute,data){
     return gain;
 }
 
-function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
-}
 
 function mode(data) {
     let modeValue;
@@ -318,23 +317,7 @@ function copyObjectWithoutKey(obj, keyToRemove) {
     return copiedObject;
 }
 
-function deepCopyArray(arr) {
-    return arr.map(item => Array.isArray(item) ? deepCopyArray(item) : (item instanceof Object) ? deepCopyObject(item) : item);
-}
 
-function deepRemoveFromArray(arr, itemToRemove) {
-    for (let i = 0; i < arr.length; i++) {
-        if (Array.isArray(arr[i])) {
-            deepRemoveFromArray(arr[i], itemToRemove);
-        } else if (arr[i] instanceof Object) {
-            deepRemoveFromObject(arr[i], itemToRemove);
-        } else if (arr[i] === itemToRemove) {
-            arr.splice(i, 1);
-            i--;
-        }
-    }
-    return arr;
-}
 
 
 let data = [];
@@ -386,13 +369,7 @@ console.log(data);
   console.log(decisionTree)
 }
 
-function createObject(atributesName){
-    const object = {};
-    atributesName.forEach((atributesName)=>{
-      object[atributesName] = null;
-    });
-    return object;
-}
+
 
 function runAlgorithm(){
     let attributesNameInstance = deepCopyArray(attributesName);
@@ -401,7 +378,9 @@ function runAlgorithm(){
     if(checkWay(net)){
         cleanWay(nodesId,net,0);
     }
+
     nodesId = [];
+
     if(document.getElementById('newDecision').value === ''){
         dropPopup("Пожалуйста , убедитесь , что вы ввели данные для предсказания в правильном формате");
         return;
