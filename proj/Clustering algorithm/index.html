@@ -19,20 +19,20 @@
         </div>
     </div>
 
-    <div class="canvases">
-        <div class="oneCanvas">
-        <label>K-means</label>
-        <canvas id="gridCanvas" width="300" height="300"></canvas>
-        </div>
-        <div class="oneCanvas">
-        <label>DBSCAN</label>
-        <canvas id ="secondCanvas" width="300" height="300"></canvas>
-        </div>
-        <div class="oneCanvas">
-        <label>Agglomerative</label>
-        <canvas id ="thirdCanvas" width="300" height="300"></canvas>
-        </div>
+<div class="canvases">
+    <div class="oneCanvas">
+    <label>K-means</label>
+    <canvas id="gridCanvas" width="300" height="300"></canvas>
     </div>
+    <div class="oneCanvas">
+    <label>DBSCAN</label>
+    <canvas id ="secondCanvas" width="300" height="300"></canvas>
+    </div>
+    <div class="oneCanvas">
+    <label>Agglomerative</label>
+    <canvas id ="thirdCanvas" width="300" height="300"></canvas>
+    </div>
+</div>
 <div class="settings">
 <div class="controls">
 <label>Количество кластеров</label>
@@ -43,9 +43,7 @@
 <button id="setRandomPoints" onclick="generateRandomPointsStart()">Установить точки случайно</button>
 </div>
 
-
 <div class="sliders">
-
     <label>Эпсилон Окрестности </label>
     <br>
     <input type="range" min="1" max="50" step ="1" value="3" class="slider" id="epsilon">
