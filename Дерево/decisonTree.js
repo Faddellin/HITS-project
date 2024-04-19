@@ -540,15 +540,17 @@ function showPrunedTree(){
 
 let displayTreeButton  = document.getElementById("displayTree");
 displayTreeButton.addEventListener('click',function(){
-    if(displayStyle === 0){
+    if(displayStyle === 1){
         displayTreeButton.textContent = "Скрыть Дерево";
-        displayStyle = 1;
+        displayStyle = 0;
+        displayTreeButton.textContent = "Показать Дерево";
         container.style.display = "none";
     }
     else{
         displayTreeButton.textContent = "Показать Дерево";
-        displayStyle  = 0;
+        displayStyle  = 1;
         container.style.display = "inline-block";
+        displayTreeButton.textContent = "Скрыть Дерево";
     }
 });
 
