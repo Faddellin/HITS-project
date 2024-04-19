@@ -45,6 +45,14 @@ animation: rotate 3s linear infinite;
 }
 }
 
+input[type="number"]
+{
+  background-color: #1a1a1d;
+  color: #ffffff;
+  font-family: inherit;
+  border-color: rgb(195, 7, 63);;
+}
+
 .settings
 {
   flex-grow: 1;
@@ -54,23 +62,25 @@ animation: rotate 3s linear infinite;
   margin-right: 5%;
 }
 
-.settings .setting
-{
-  flex-grow: 1;
-  margin: 0 5px;
-  padding: 10px 20px;
-  font-family: inherit;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .controls
 {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+}
+
+.controls label,
+.controls input,
+.controls button {
+  margin-bottom: 5%;
+}
+
+.controls input[type="number"], .controls button {
+  width: 100%;
+  max-width: 200px;
 }
 
 .buttons
@@ -105,13 +115,25 @@ animation: rotate 3s linear infinite;
   background-color: rgba(195, 7, 63, 0.8)
 }
 
+.canvases
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
+.oneCanvas
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 #gridCanvas{
     border: 3px solid #000000;
     margin-top: 2%;
     margin-bottom: auto;
-    margin-left: 300px;
     margin-right: auto;
     display: inline-block;
     background: #ffffff;
@@ -135,14 +157,23 @@ animation: rotate 3s linear infinite;
     background: #ffffff;
 }
 
-.sliders{
-    width: 100px;
-    height: 20px;
+.sliders
+{
+    margin-top: 1%;
+    width: auto;
+    height: auto;
     cursor: pointer;
+    text-align: center;
 }
 
-.values{
-    margin-left:50px;
+.slider
+{
+  margin-top: 3%;
+}
+
+.distances
+{
+  margin-top: 1%;
 }
 
 .field{
@@ -263,5 +294,37 @@ input[type="radio"]
   }
 }
 
+/* Адаптивные стили */
+@media (max-width: 768px) {
+	body
+	{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
+	
+    .header {
+		margin-bottom: 1%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
+    .buttons {
+		display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .image {
+        margin-right: 0;
+    }
+
+    .settings, .oneCanvas, .canvases
+    {
+      display: flex;
+      flex-direction: column;
+    }
+}

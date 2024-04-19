@@ -19,10 +19,19 @@
         </div>
     </div>
 
-    <div class="canvas">
+    <div class="canvases">
+        <div class="oneCanvas">
+        <label>K-means</label>
         <canvas id="gridCanvas" width="300" height="300"></canvas>
+        </div>
+        <div class="oneCanvas">
+        <label>DBSCAN</label>
         <canvas id ="secondCanvas" width="300" height="300"></canvas>
+        </div>
+        <div class="oneCanvas">
+        <label>Agglomerative</label>
         <canvas id ="thirdCanvas" width="300" height="300"></canvas>
+        </div>
     </div>
 <div class="settings">
 <div class="controls">
@@ -40,8 +49,8 @@
     <label>Эпсилон Окрестности </label>
     <br>
     <input type="range" min="1" max="50" step ="1" value="3" class="slider" id="epsilon">
-    <label id="sliderValue" class="values">3</label>
-    <label>Количество соседей</label>
+    <label id="sliderValue" class="values">3</label><br><br>
+    <label>Количество соседей</label><br>
     <input type="range" min="2" max="15" step ="1" value="2" class="slider" id="neighbors">
     <label id="neighborsValue" class="values">2</label>
 </div>

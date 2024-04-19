@@ -138,6 +138,7 @@ export class AStar
         };
 
         processNextNeighbor();
+        clearTimeout(processNextNeighbor);
     }
 
     travelAlongPath(path) {
@@ -188,5 +189,6 @@ export class AStar
         };
     
         traversePath();
+        clearTimeout(traversePath);
     }
 }
