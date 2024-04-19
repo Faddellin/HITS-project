@@ -1,0 +1,14 @@
+﻿  ActivateFunction.cpp
+  Matrix.cpp
+  NetWork.cpp
+C:\Users\Faddellin\Desktop\Neural Network\neuralNetworkTraining\neuralNetworkTraining\NetWork.cpp(4,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Program.cpp
+C:\Users\Faddellin\Desktop\Neural Network\neuralNetworkTraining\neuralNetworkTraining\Program.cpp(30,28): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\Faddellin\Desktop\Neural Network\neuralNetworkTraining\neuralNetworkTraining\Program.cpp(31,29): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\Faddellin\Desktop\Neural Network\neuralNetworkTraining\neuralNetworkTraining\Program.cpp(79,10): warning C4101: study: неиспользованная локальная переменная
+  Создание кода
+  192 of 200 functions (96.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  neuralNetworkTraining.vcxproj -> C:\Users\Faddellin\Desktop\Neural Network\neuralNetworkTraining\x64\Release\neuralNetworkTraining.exe
