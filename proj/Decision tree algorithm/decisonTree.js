@@ -593,5 +593,46 @@ displayTreeButton.addEventListener('click',function(){
     }
 });
 
+ function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
 
+ function copyObjectWithoutKey(obj, keyToRemove) {
+    
+    const copiedObject = { ...obj };
+
+    if (copiedObject.hasOwnProperty(keyToRemove)) {
+        delete copiedObject[keyToRemove];
+    }
+
+    return copiedObject;
+}
+
+
+ function deepCopyArray(arr) {
+    return arr.map(item => Array.isArray(item) ? deepCopyArray(item) :
+     (item instanceof Object) ? deepCopyObject(item) : item);
+}
+
+function deepRemoveFromArray(arr, itemToRemove) {
+    for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            deepRemoveFromArray(arr[i], itemToRemove);
+        } else if (arr[i] instanceof Object) {
+            deepRemoveFromObject(arr[i], itemToRemove);
+        } else if (arr[i] === itemToRemove) {
+            arr.splice(i, 1);
+            i--;
+        }
+    }
+    return arr;
+}
+
+ function createObject(atributesName){
+    const object = {};
+    atributesName.forEach((atributesName)=>{
+      object[atributesName] = null;
+    });
+    return object;
+}
 
