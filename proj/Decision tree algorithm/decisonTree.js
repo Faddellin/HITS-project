@@ -1,18 +1,10 @@
+//Глобальные переменные для библиотеки и взаимодействия с html
 let nodesId = [];
 let net;
 let container = document.getElementById('mynetwork');
 let displayStyle = 1;
 
-document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.getElementById('prunePercent');
-    const sliderValue = document.getElementById('sliderValue');
-    
-    slider.addEventListener('input', () => {
-    const value = slider.value;
-    sliderValue.textContent = value;
-    });
-});
-
+// структура дерева
 class TreeNode {
     constructor(value,attributeValue,branch,threshold,NodeData) {
         this.value = value;
@@ -33,13 +25,17 @@ function dropPopup(popupText)
 {
     let popup = document.getElementById("popup");
     let popupContent = document.getElementById("popupText");
+
     popupContent.textContent = popupText;
     popup.style.display = "block";
+
     setTimeout(function() {
         popup.classList.add("fadeOut");
         setTimeout(function() {
+
             popup.style.display = "none";
             popup.classList.remove("fadeOut");
+
         }, 500)
     }, 3500);
 
@@ -47,7 +43,7 @@ function dropPopup(popupText)
         document.getElementById("popup").style.display = "none";
     });
 }
-
+// функция для выбора наилучшего разбиения
 function chooseBestAttribute(attributes,data){
     let bestAttribute;
     let gain =-Infinity;
@@ -70,14 +66,19 @@ function chooseBestAttribute(attributes,data){
                    let infoGain = fulldataEnt-(((subsetLess.length/data.length)*subsetLessEnt)+
                    ((subsetGreater.length/data.length)*subsetGreaterEnt));
 
-                   let splitinfo = -((subsetLess.length/data.length)*Math.log2(subsetLess.length/data.length))-
-                   ((subsetGreater.length/data.length)*Math.log2(subsetGreater.length/data.length));
+                   let splitinfo = -((subsetLess.length/data.length)*
+                   Math.log2(subsetLess.length/data.length))-
+                   ((subsetGreater.length/data.length)*
+                   Math.log2(subsetGreater.length/data.length));
+
                    currentAttributeGain = infoGain/splitinfo;
 
                    if(currentAttributeGain>gain){
+
                      gain = currentAttributeGain;
                      bestAttribute = attribute; 
                      bestThreshold = threshold;
+
                    } 
                 }
             }
@@ -90,7 +91,7 @@ function chooseBestAttribute(attributes,data){
     }
    return [bestAttribute,bestThreshold];
 }
-
+// Проверка на непрерывный атрибут
 function ifAttributeIsContinuous(attribute){
     attributeValues =getAttributeValues(data,attribute);
     for(attributeValue of attributeValues){
@@ -99,7 +100,7 @@ function ifAttributeIsContinuous(attribute){
         }
     }
 }
-
+// Вычисление порога для разбиения
 function findThresholds(attribute,data){
     let values = getAttributeValues(data,attribute);
     values.sort(function(a,b){
@@ -107,7 +108,7 @@ function findThresholds(attribute,data){
     });
     return values;
 }
-
+// Деление на подмножества
 function splitSubsets(data,attribute,threshold){
 
     let subsetGreater = [];
@@ -119,6 +120,7 @@ function splitSubsets(data,attribute,threshold){
     return [subsetGreater,subsetLess];
 }
 
+// Вычисление энтропии
 function calculateEntropy(data){
    let totalLength = data.length;
     let classCounter = {};
@@ -145,6 +147,7 @@ function calculateEntropy(data){
     return entropy;
 }
 
+// Получение значений атрибутов
 function getAttributeValues(data,attribute){
    const attributeValues = new Set();
 
@@ -156,7 +159,7 @@ function getAttributeValues(data,attribute){
 
     return Array.from(attributeValues);
 }
-
+// Получение подмножества по атрибуту
 function getSubset(data,attribute,attributeValue){
     let subset = new Set();
 
@@ -170,6 +173,7 @@ function getSubset(data,attribute,attributeValue){
     return Array.from(subset);
 }
 
+// Вычисление информационного выигрыша
 function calculateInfoGain(attribute,data){
 
     let gain;
@@ -199,7 +203,7 @@ function calculateInfoGain(attribute,data){
     return gain;
 }
 
-
+// Получение самого частого класса данного подмножества
 function mode(data) {
     let modeValue;
     let classCounter = {};
@@ -226,7 +230,7 @@ function mode(data) {
 
     return modeValue;
 }
-
+// Проверка на ветвь с одним классом
 function allSameClass(data){
    let classValue = data[0][targetAttribute];
 
@@ -240,7 +244,7 @@ function allSameClass(data){
 }
 
 
-
+// Построение дерева
 function buildDecisionTreeC45(data,attributes,attributeValue){  
     let lastAttributeValue;
     let firstChild;
@@ -275,7 +279,9 @@ function buildDecisionTreeC45(data,attributes,attributeValue){
             const subset = getSubset(data,bestAttribute,bestAttributeValue);
             lastAttributeValue = bestAttributeValue;
 
-            const childNode = buildDecisionTreeC45(subset, attributes.filter(attr=>attr!=bestAttribute),lastAttributeValue,NaN);
+            const childNode = buildDecisionTreeC45(subset, attributes.
+                filter(attr=>attr!=bestAttribute),lastAttributeValue,NaN);
+
             tree.addChild(childNode);
             
         }
@@ -283,17 +289,20 @@ function buildDecisionTreeC45(data,attributes,attributeValue){
     return tree;
 }
 
-
+// Усечение дерева
 function prune(decisionTree,data){
 
     prunePercent = document.getElementById('prunePercent').value;
 
    if(decisionTree.NodeData.length<Math.floor(data.length*prunePercent)){
+
     decisionTree.value = targetAttribute;
     decisionTree.attributeValue = mode(decisionTree.NodeData);
     decisionTree.children = [];
     decisionTree.threshold = NaN;
+
    }
+   
    else if(decisionTree.children.length!==0) {
 
      for(child of decisionTree.children){
@@ -305,18 +314,6 @@ function prune(decisionTree,data){
    return decisionTree;
 }
 
-function copyObjectWithoutKey(obj, keyToRemove) {
-    
-    const copiedObject = { ...obj };
-
-    if (copiedObject.hasOwnProperty(keyToRemove)) {
-        delete copiedObject[keyToRemove];
-    }
-
-    return copiedObject;
-}
-
-
 
 
 let data = [];
@@ -324,6 +321,7 @@ let targetAttribute;
 let attributesName;
 let decisionTree;
 
+//Получение дерева по данным
 function getDecisionTree(){
 
     if(document.getElementById('atributes').value === ''){
@@ -360,20 +358,17 @@ function getDecisionTree(){
         data.push(rowData);
     });
         
-console.log(data);
-
  
   decisionTree = buildDecisionTreeC45(data,attributesName,null);
   showTree(decisionTree);
-  console.log(decisionTree)
 }
 
 
-
+// Предсказание
 function runAlgorithm(){
+
     let attributesNameInstance = deepCopyArray(attributesName);
     attributesNameInstance = deepRemoveFromArray(attributesNameInstance,targetAttribute);
-    console.log(nodesId);
     if(checkWay(net)){
         cleanWay(nodesId,net,0);
     }
@@ -384,6 +379,7 @@ function runAlgorithm(){
         dropPopup("Пожалуйста , убедитесь , что вы ввели данные для предсказания в правильном формате");
         return;
     }
+
     let stringInstance = document.getElementById('newDecision').value.split(',');
     const instanceToClassify = createObject(attributesNameInstance);
 
@@ -394,53 +390,54 @@ function runAlgorithm(){
         showDecision(nodesId,net,0);        
         console.log("Predicted class:", predictedClass);
 }
-
+// Проверка на отрисованный путь решения
 function checkWay(network){
     network.body.data.nodes.get().filter(function(node) {
-        return node.color === 'green'; // Проверяем на зеленый цвет (пример)
+        return node.color === 'green'; 
     });
 }
-
+// Визуал дерева
 function showTree(decisionTree){
-    let nodes = [];
-let edges = [];
-convertToVisNodesEdges(decisionTree, undefined, nodes, edges);
+  let nodes = [];
+  let edges = [];
 
-let dataVis = { nodes, edges };
+  convertToVisNodesEdges(decisionTree, undefined, nodes, edges);
 
-const options = {
-    nodes:{
-        color:{
+  let dataVis = { nodes, edges };
+
+  const options = {
+      nodes:{
+          color:{
             background:"#b3ffff",
             border:"#c3073f"
         },
-        font:{
-            size: 12, // Размер шрифта
-            face: 'Franklin Gothic Medium', // Шрифт
-            color: "white", // Цвет текста
-            strokeWidth: 1.5, // Ширина обводки текста (если нужно)
-            strokeColor: "black" // Цвет обводки текста (если нужно)
+          font:{
+              size: 12, 
+              face: 'Franklin Gothic Medium',
+              color: "white", 
+              strokeWidth: 1.5,
+              strokeColor: "black"
         }
     },
-    edges:{
-        color:"#c3073f",
-        width: 3,
-        font:{
-            size: 12, // Размер шрифта
-            face: 'Franklin Gothic Medium', // Шрифт
-            color: "white", // Цвет текста
-            strokeWidth: 1.5, // Ширина обводки текста (если нужно)
-            strokeColor: "black" // Цвет обводки текста (если нужно)
+      edges:{
+          color:"#c3073f",
+          width: 3,
+          font:{
+              size: 12, 
+              face: 'Franklin Gothic Medium',
+              color: "white", 
+              strokeWidth: 1.5,
+              strokeColor: "black" 
         }
     }
 };
 
-let network = new vis.Network(container, dataVis, options);
-network.body.data.nodes.update({ id: 0, color: "red",shape:"circle" });
-net = network;
+    let network = new vis.Network(container, dataVis, options);
+    network.body.data.nodes.update({ id: 0, color: "red",shape:"circle" });
+    net = network;
 }
 
-
+// Классификация данных для прогноза
 function classify(decisionTree,instanceToClassify,targetAttribute){
     
       let currentTreeAttribute = decisionTree.value;
@@ -454,6 +451,7 @@ function classify(decisionTree,instanceToClassify,targetAttribute){
                     nodesId.push(decisionTree.Id);
 
                     if(decisionTree.attributeValue==null){
+                        dropPopup('Дереву не хватает данных , чтобы сделать более точный прогноз, предполагаемый класс'+ mode(decisionTree.NodeData));
                         return mode(decisionTree.NodeData);
                     }
 
@@ -509,7 +507,7 @@ function classify(decisionTree,instanceToClassify,targetAttribute){
             }
         }
     }
-
+// Преобразование дерева в библиотечный формат
   function convertToVisNodesEdges(node, parentNodeId, nodes, edges) {
     const nodeId = nodes.length;
     node.Id = nodeId;
@@ -528,7 +526,7 @@ function classify(decisionTree,instanceToClassify,targetAttribute){
         convertToVisNodesEdges(child, nodeId, nodes, edges);
     });
 }
-
+// Показать путь решения
 function showDecision(nodesId,network,rootId){
     let classNode = nodesId[nodesId.length-1];
     for(let node of nodesId){
@@ -540,7 +538,7 @@ function showDecision(nodesId,network,rootId){
     network.body.data.nodes.update({ id: classNode, color:{background:"green", border:"red" }});
     colorEdges(nodesId,network,"green");
 }
-
+// Очистить путь
 function cleanWay(nodesId,network,rootId){
     for(let node of nodesId){
 
@@ -552,7 +550,7 @@ function cleanWay(nodesId,network,rootId){
     colorEdges(nodesId,network,"#c3073f");
 }
 
-
+// Покраска
 function colorEdges(nodesId,network,color){
 
     for(let i = 0;i<nodesId.length-1;i++){
@@ -563,6 +561,7 @@ function colorEdges(nodesId,network,color){
         const edgesIds = network.getConnectedEdges(nodeId1).filter(edgeId => {
             const edge = network.body.data.edges.get(edgeId);
             return edge.to === nodeId2 || edge.from === nodeId2;
+
         });
 
         network.body.data.edges.update({id:edgesIds[0], color:color});
@@ -570,7 +569,7 @@ function colorEdges(nodesId,network,color){
     }
    
 }
-
+// Обрезать дерево
 function showPrunedTree(){
 
    let  prunedTree = prune(decisionTree,data);
@@ -592,6 +591,7 @@ displayTreeButton.addEventListener('click',function(){
     }
 });
 
+//Вспомогательные функции
  function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
@@ -635,3 +635,12 @@ function deepRemoveFromArray(arr, itemToRemove) {
     return object;
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('prunePercent');
+    const sliderValue = document.getElementById('sliderValue');
+    
+    slider.addEventListener('input', () => {
+    const value = slider.value;
+    sliderValue.textContent = value;
+    });
+});
