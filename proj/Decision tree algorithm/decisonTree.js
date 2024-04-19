@@ -343,9 +343,27 @@ let attributesName;
 let decisionTree;
 
 function getDecisionTree(){
+
+    if(document.getElementById('atributes').value === ''){
+        dropPopup("Пожалуйста , убедитесь , что вы ввели названия аттрибутов в правильном формате");
+        return;
+    }
+
     let inputAttributes = document.getElementById('atributes').value;
+
+    if(document.getElementById('targetClass').value === ''){
+        dropPopup("Пожалуйста , убедитесь , что вы ввели название аттрибута , для которого будет сделано предсказание");
+        return;
+    }
+
     targetAttribute = document.getElementById('targetClass').value;
+
     attributesName = inputAttributes.split(',');
+
+    if (document.getElementById('csvInput').value.trim() === '') {
+        dropPopup("Вы не ввели данные для обучения");
+        return;
+    }
 
     let csvData = document.getElementById('csvInput').value;
     let rows = csvData.trim().split('\n');
@@ -380,8 +398,14 @@ function runAlgorithm(){
     let attributesNameInstance = deepCopyArray(attributesName);
     attributesNameInstance = deepRemoveFromArray(attributesNameInstance,targetAttribute);
     console.log(nodesId);
-    cleanWay(nodesId,net,0);
+    if(checkWay(net)){
+        cleanWay(nodesId,net,0);
+    }
     nodesId = [];
+    if(document.getElementById('newDecision').value === ''){
+        dropPopup("Пожалуйста , убедитесь , что вы ввели данные для предсказания в правильном формате");
+        return;
+    }
     let stringInstance = document.getElementById('newDecision').value.split(',');
     const instanceToClassify = createObject(attributesNameInstance);
 
@@ -389,8 +413,14 @@ function runAlgorithm(){
         instanceToClassify[attributesNameInstance[i]] = stringInstance[i];
     }
         const predictedClass = classify(decisionTree, instanceToClassify,targetAttribute);
-        showDecision(nodesId,net,0);
+        showDecision(nodesId,net,0);        
         console.log("Predicted class:", predictedClass);
+}
+
+function checkWay(network){
+    network.body.data.nodes.get().filter(function(node) {
+        return node.color === 'green'; // Проверяем на зеленый цвет (пример)
+    });
 }
 
 function showTree(decisionTree){
