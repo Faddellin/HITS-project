@@ -146,6 +146,11 @@ label
     justify-content: center;
 }
 
+.buttons2 > button
+{
+    margin-left: 1%;
+}
+
 textarea, input
 {
     font-family: inherit;
@@ -179,6 +184,14 @@ input[type="range"]::-webkit-slider-thumb
 input[type="range"]::-webkit-slider-thumb:hover
 {
   background: rgb(111, 3, 35);
+}
+
+input, textarea
+{
+  background-color: #1a1a1d;
+  color: #ffffff;
+  font-family: inherit;
+  border-color: rgb(195, 7, 63);;
 }
 
 
@@ -240,4 +253,45 @@ input[type="range"]::-webkit-slider-thumb:hover
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+	body
+	{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	
+    .header {
+		margin-bottom: 1%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buttons {
+		display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .image {
+        margin-right: 0;
+    }
+
+    .parameters
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input
+    {
+        align-items: center;
+    }
 }
