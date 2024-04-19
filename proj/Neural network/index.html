@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+	<head> 
+	<meta charset="UTF-4"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>Neural network</title> 
+	<link rel="stylesheet" href="styles.css">
+	</head> 
+	<body> 
+		<div class="header">
+			<img src="../HITS icon.svg" alt="Logo" class="image" style="filter: invert(100%);" onclick="redirect('../Landing page/index.html')">
+			<div class="buttons">
+				<button onclick="redirect('../AStar algorithm/index.html')"><img src="../Labyrinth icon.svg" alt="Logo" class="icon"> A*</button>
+				<button onclick="redirect('../Clustering algorithm/index.html')"><img src="../Ore icon.svg" alt="Logo" class="icon"> Алгоритм кластеризации</button>
+				<button onclick="redirect('../Genetic algorithm/index.html')"><img src="../DNA icon.svg" alt="Logo" class="icon"> Генетический алгоритм</button>
+				<button onclick="redirect('../Ant colony algorithm/index.html')"><img src="../Ant icon.svg" alt="Logo" class="icon"> Муравьиный алгоритм</button>
+				<button onclick="redirect('../Decision tree algorithm/index.html')"><img src="../Tree icon.svg" alt="Logo" class="icon"> Дерево решений</button>
+				<button onclick="redirect('../Neural network/index.html')"><img src="../AI icon.svg" alt="Logo" class="icon"> Нейронная сеть</button>
+			</div>
+		</div>
+
+		<div class ="left">
+		<div class="container" id="container"></div>
+		<button id="fileButton">Прочитать цифру</button>
+		<button id="clearButton">Очистить поле</button>
+		<button id="mouseMode">Режим ластика</button>
+		<label for="brushSize">Размер кисточки</label>
+		<input type="range" id="brushSize" min="1" max="5">
+		</div>
+		<div class = "right">
+			<div class="headerOfRightPart">Вероятность</div>
+			<div class="sliders">
+				<label id="zero">0: 0</label>
+				
+				<label id="one">1: 0</label>
+
+				<label id="two">2: 0</label>
+
+				<label id="three">3: 0</label>
+
+				<label id="four">4: 0</label>
+
+				<label id="five">5: 0</label>
+
+				<label id="six">6: 0</label>
+
+				<label id="seven">7: 0</label>
+
+				<label id="eight">8: 0</label>
+
+				<label id="nine">9: 0</label>
+
+				<div class="answer" id="answer">Ответ: ?</div>
+
+			</div>
+		<script type="module" src="script.js"> 
+		</script> 
+		
+		<script>
+			function redirect(path)
+			{
+				window.location.href = path;
+			}
+		</script>
+	</body>
+</html>
