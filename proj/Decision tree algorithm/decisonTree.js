@@ -1,4 +1,3 @@
-import{getKeyByValue,deepCopyArray,deepRemoveFromArray,createObject} from "./secondaryFunctions.js";
 let nodesId = [];
 let net;
 let container = document.getElementById('mynetwork');
