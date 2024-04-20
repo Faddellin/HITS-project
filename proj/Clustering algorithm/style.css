@@ -115,6 +115,26 @@ input[type="number"]
   background-color: rgba(195, 7, 63, 0.8)
 }
 
+#sendData
+{
+  margin-top: 3%;
+  background-color: #1a1a1d;
+  color: #ffffff;
+  border-color: rgb(195, 7, 63);
+  border-radius: 15px;
+  font-family: inherit;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#sendData:hover
+{
+  background-color: rgba(195, 7, 63, 0.8)
+}
+
 .canvases
 {
   display: flex;
