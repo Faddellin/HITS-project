@@ -272,7 +272,7 @@ input, textarea
         justify-content: center;
     }
 
-    .buttons {
+    .buttons, .buttons2 {
 		display: flex;
         flex-direction: column;
         align-items: center;
