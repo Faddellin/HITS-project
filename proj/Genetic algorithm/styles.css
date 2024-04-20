@@ -83,7 +83,7 @@ body
   background-color: gray;
 }
 
-.buttons button:hover {
+.buttons button:hover:enabled {
     background-color: rgba(195, 7, 63, 0.8)
 }
 
